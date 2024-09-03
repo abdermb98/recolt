@@ -9,7 +9,7 @@
             font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
             margin: 0;
             padding: 0;
-            background-color: #e0f2f1;
+            background-color: #ffffff;
         }
         .container {
             max-width: 1200px;
@@ -119,11 +119,40 @@
             <input type="date" id="date" name="date" required>
 
             <label for="stock-initial">PARCELLES</label>
-            <input type="text" id="stock-initial" name="stockInitial" required>
-
+            
+            <select style="font-weight: bold;" id="stock-initial">
+                <option style="font-weight: bold;" value="P40 CEBOLLINO">P40 CEBOLLINO</option>
+                <option style="font-weight: bold;" value="P41 CEBOLLINO">P41 CEBOLLINO</option>
+                <option style="font-weight: bold;" value="P42 CEBOLLINO">P42 CEBOLLINO</option>
+                <option style="font-weight: bold;" value="P43 CEBOLLINO">P43 CEBOLLINO</option>
+                <option style="font-weight: bold;" value="P44 CEBOLLINO">P44 CEBOLLINO</option>
+                <option style="font-weight: bold;" value="P45 HABANERO">P45 HABANERO</option>
+                <option style="font-weight: bold;" value="P46 CEBOLLINO">P46 CEBOLLINO</option>
+                <option style="font-weight: bold;" value="P47 CEBOLLINO">P47 CEBOLLINO</option>
+                <option style="font-weight: bold;" value="P48 ESTRAGON">P48 ESTRAGON</option>
+                <option style="font-weight: bold;" value="P49 CEBOLLINO">P49 CEBOLLINO</option>
+                <option style="font-weight: bold;" value="P50 CEBOLLINO">P50 CEBOLLINO</option>
+                <option style="font-weight: bold;" value="P51 CEBOLLINO">P51 CEBOLLINO</option>
+                <option style="font-weight: bold;" value="P52 ESTRAGON">P52 ESTRAGON</option>
+                <option style="font-weight: bold;" value="P53 ESTRAGON">P53 ESTRAGON</option>
+                <option style="font-weight: bold;" value="P54 CEBOLLINO">P54 CEBOLLINO</option>
+                <option style="font-weight: bold;" value="P55 CEBOLLINO">P55 CEBOLLINO</option>
+                <option style="font-weight: bold;" value="P56 CEBOLLINO">P56 CEBOLLINO</option>
+                <option style="font-weight: bold;" value="P57 CEBOLLINO">P57 CEBOLLINO</option>
+                <option style="font-weight: bold;" value="P58 CEBOLLINO">P58 CEBOLLINO</option>
+                <option style="font-weight: bold;" value="P59 CEBOLLINO">P59 CEBOLLINO</option>
+                <option style="font-weight: bold;" value="P60 CEBOLLINO">P60 CEBOLLINO</option>
+                <option style="font-weight: bold;" value="P61 CEBOLLINO">P61 CEBOLLINO</option>
+                <option style="font-weight: bold;" value="P62 CEBOLLINO">P62 CEBOLLINO</option>
+                <option style="font-weight: bold;" value="P63 CEBOLLINO">P63 CEBOLLINO</option>
+            </select>
             <label for="entree">FINI/BRUT</label>
-            <input type="text" id="entree" name="entree" >
-
+            
+            <select style="font-weight: bold;" id="entree">
+                <option style="font-weight: bold;" value="FINI">FINI</option>
+                <option style="font-weight: bold;" value="BRUT">BRUT</option>
+                <option style="font-weight: bold;" value="BRUT CAMPO">BRUT CAMPO</option>
+            </select>
             <label for="sortie">TOTAL BRUT</label>
             <input type="number" id="sortie" name="sortie" >
 
@@ -188,7 +217,7 @@
         })
         .then(response => response.json())
         .then(data => {
-            alert('Data submitted successfully!');
+            alert('OK!');
             loadTableData();
             document.getElementById('data-entry-form').style.display = 'none'; // إخفاء النموذج بعد الإرسال
         })
