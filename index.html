@@ -278,14 +278,35 @@
     }
 
     function filterTable(columnIndex, searchTerm) {
+    const rows = document.querySelectorAll('#data-table tbody tr');
+    searchTerm = searchTerm.toLowerCase();
+    rows.forEach(row => {
+        const cell = row.cells[columnIndex].textContent.toLowerCase();
+        if (!row.hasAttribute('data-hidden') || columnIndex === 0) {
+            const match = cell.includes(searchTerm);
+            row.style.display = match ? '' : 'none';
+            // Add an attribute to track rows hidden due to the current filter
+            if (match) {
+                row.removeAttribute('data-hidden');
+            } else {
+                row.setAttribute('data-hidden', true);
+            }
+        }
+    });
+    updateColumnSums(); // تحديث مجموع الأعمدة بعد تحميل البيانات
+}
+
+// Function to reset the filter and apply a new one
+function resetAndFilter(columnIndex, searchTerm) {
+    if (columnIndex === 0) {
+        // Reset all rows for the first column filter (group)
         const rows = document.querySelectorAll('#data-table tbody tr');
-        searchTerm = searchTerm.toLowerCase();
-        rows.forEach(row => {
-            const cell = row.cells[columnIndex].textContent.toLowerCase();
-            row.style.display = cell.includes(searchTerm) ? '' : 'none';
-        });
-        updateColumnSums(); // تحديث مجموع الأعمدة عند تغيير الفلتر
+        rows.forEach(row => row.removeAttribute('data-hidden'));
     }
+    filterTable(columnIndex, searchTerm);
+    updateColumnSums(); // تحديث مجموع الأعمدة بعد تحميل البيانات
+}
+
 
     function updateColumnSums() {
         const rows = document.querySelectorAll('#data-table tbody tr');
