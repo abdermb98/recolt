@@ -104,9 +104,9 @@
 
     <label for="sheet-select">LA CULTURE:</label>
     <select style="font-weight: bold;" id="sheet-select">
-        <option style="font-weight: bold;" value="https://script.google.com/macros/s/AKfycbya-f0PqGVqPoJVf3pf4-ZMFu3WjidExdC4tSj1BvyRuJV0_BAa9ooGTQSOLh753akx/exec">CEBOLLINO</option>
-        <option style="font-weight: bold;" value="https://script.google.com/macros/s/AKfycbyT5huap4Qp4EP7d3MnVdSvjjGfXB44vm9VtPAtoj1rxfieBbMm-Cda8nwmXL1lLoQf/exec">ESTRAGON</option>
-        <option style="font-weight: bold;" value="https://script.google.com/macros/s/AKfycbwV4y7hqXudRu659NaXR7Q-KKweI_iTJXq2ofETB_L05o4CoY4f8NbedonZB94SXar2/exec">HABANERO</option>
+        <option style="font-weight: bold;" value="https://script.google.com/macros/s/AKfycbwkXSp6EJ9W5m42MbOuYUDMbcagWwvHOA5Cz6tPuZr_gvdVHwzrJA0d1bdvbGbKnVPs/exec">CEBOLLINO</option>
+        <option style="font-weight: bold;" value="https://script.google.com/macros/s/AKfycbwDGlg6n5_Z07Mnb5hwdMhJG-kTCa-miqfwN8s3EIxlkTZTcLTMZyxTmcCoONsz7Frk/exec">ESTRAGON</option>
+        <option style="font-weight: bold;" value="https://script.google.com/macros/s/AKfycbwBELfrTVMuq5pWqrDZ3NM8OZ-IedmQ_H74557libXU1_FnvvN4o9hLOGk_EkNaXEU/exec">HABANERO</option>
     </select>
 
     
@@ -173,7 +173,9 @@
                 <option style="font-weight: bold;" value="COUPE 6">COUPE 6</option>
                 <option style="font-weight: bold;" value="COUPE 7">COUPE 7</option>
             </select>
-
+             
+			 <label for="weeknumber">SEMAINE:</label>
+             <input type="number" id="weeknumber" name="weekNumber" readonly>
             <button type="submit">Submit</button>
             <button type="button" id="hide-form-btn">Cancel</button>
         </form>
@@ -194,6 +196,22 @@
 </div>
 
 <script>
+document.getElementById('date').addEventListener('change', function() {
+    const date = new Date(this.value);
+    const weekNumber = getWeekNumber(date);
+    document.getElementById('weeknumber').value = weekNumber;
+});
+
+function getWeekNumber(d) {
+    // Create a new date object to prevent modification of the original date
+    const date = new Date(d);
+    // Set to the first day of the year
+    date.setHours(0, 0, 0, 0);
+    date.setDate(date.getDate() + 4 - (date.getDay() || 7)); // Set to nearest Thursday
+    const yearStart = new Date(date.getFullYear(), 0, 1);
+    return Math.ceil((((date - yearStart) / 86400000) + 1) / 7); // Calculate week number
+}
+
     document.getElementById('youtubeButton').onclick = function() {
     window.location.href = 'https://abdermb98.github.io/home/';
 };
@@ -224,7 +242,8 @@
             sortie: document.getElementById('sortie').value,
             stockFinal: document.getElementById('stock-final').value,
             observation: document.getElementById('observation').value,
-			coupre: document.getElementById('coupre').value
+			coupre: document.getElementById('coupre').value,
+			weeknumber: document.getElementById('weeknumber').value
         };
 
         fetch(currentSheetUrl, {
@@ -357,8 +376,8 @@ function resetFilters() {
         });
         const ECART =(sumColumn4-sumColumn3)*100/sumColumn4;
 		const ECART1 =(sumColumn4-sumColumn3)*100/sumColumn4;
-        document.getElementById('sumColumn3').textContent = sumColumn3.toFixed(2);
-        document.getElementById('sumColumn4').textContent = sumColumn4.toFixed(2);
+        document.getElementById('sumColumn3').textContent = sumColumn3.toFixed(0);
+        document.getElementById('sumColumn4').textContent = sumColumn4.toFixed(0);
 		document.getElementById('ECART').textContent = ECART.toFixed(0) + '%';
 		document.getElementById('sumColumn5').textContent = sumColumn5.toFixed(0)+ 'M²';
     }
