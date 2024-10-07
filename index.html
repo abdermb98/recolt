@@ -104,9 +104,9 @@
 
     <label for="sheet-select">LA CULTURE:</label>
     <select style="font-weight: bold;" id="sheet-select">
-        <option style="font-weight: bold;" value="https://script.google.com/macros/s/AKfycbzZpAj2K1TbvTv-AXoIql0ANqK9w-8GGjdqIlAUrAdrPKvyRv110hOkUAi1IkYCPOg9/exec">CEBOLLINO</option>
-        <option style="font-weight: bold;" value="https://script.google.com/macros/s/AKfycbztG4VcW7cXNjQyPBa_siDJnm0lq-xjuXOWH8_YRongsacluXVpcRZwOztqxPm28IHH/exec">ESTRAGON</option>
-        <option style="font-weight: bold;" value="https://script.google.com/macros/s/AKfycbxcByuGUpjeIcIw8koYTpguFTio6QTqU6kRCNurlUN4MM52pAb8fV-6q-YXikJ7sQzP/exec">HABANERO</option>
+        <option style="font-weight: bold;" value="https://script.google.com/macros/s/AKfycbya-f0PqGVqPoJVf3pf4-ZMFu3WjidExdC4tSj1BvyRuJV0_BAa9ooGTQSOLh753akx/exec">CEBOLLINO</option>
+        <option style="font-weight: bold;" value="https://script.google.com/macros/s/AKfycbyT5huap4Qp4EP7d3MnVdSvjjGfXB44vm9VtPAtoj1rxfieBbMm-Cda8nwmXL1lLoQf/exec">ESTRAGON</option>
+        <option style="font-weight: bold;" value="https://script.google.com/macros/s/AKfycbwV4y7hqXudRu659NaXR7Q-KKweI_iTJXq2ofETB_L05o4CoY4f8NbedonZB94SXar2/exec">HABANERO</option>
     </select>
 
     
@@ -161,6 +161,18 @@
 
             <label for="observation">SUPERFICIE:</label>
             <input type="text" id="observation" name="observation">
+			
+			<label for="coupre">COUPE:</label>
+        
+			<select style="font-weight: bold;" id="coupre">
+                <option style="font-weight: bold;" value="COUPE 1">COUPE 1</option>
+                <option style="font-weight: bold;" value="COUPE 2">COUPE 2</option>
+                <option style="font-weight: bold;" value="COUPE 3">COUPE 3</option>
+                <option style="font-weight: bold;" value="COUPE 4">COUPE 4</option>
+                <option style="font-weight: bold;" value="COUPE 5">COUPE 5</option>
+                <option style="font-weight: bold;" value="COUPE 6">COUPE 6</option>
+                <option style="font-weight: bold;" value="COUPE 7">COUPE 7</option>
+            </select>
 
             <button type="submit">Submit</button>
             <button type="button" id="hide-form-btn">Cancel</button>
@@ -169,7 +181,7 @@
 
     <h2 style="text-align: center; font-weight: bold;" id="table-title">Selected Sheet: Sheet 1</h2>
 
-    <div style="text-align: center;" id="sum-container">TOTAL FINI: <span id="sumColumn3"></span>///// TOTAL BRUT: <span id="sumColumn4"></span></span>///// ECART: <span id="ECART"></span></div>
+    <div style="text-align: center;" id="sum-container">T.FINI: <span id="sumColumn3"></span> / T.BRUT: <span id="sumColumn4"></span></span> / ECART: <span id="ECART"></span>/ SUP: <span id="sumColumn5"></span></div>
 
     <table id="data-table">
         <thead>
@@ -191,7 +203,7 @@
     document.getElementById('sheet-select').addEventListener('change', function() {
         currentSheetUrl = this.value;
         currentSheetName = this.options[this.selectedIndex].text;
-        document.getElementById('table-title').textContent = `FICHE DE STOCK : ${currentSheetName}`;
+        document.getElementById('table-title').textContent = `${currentSheetName}`;
         
         loadTableData();
     });
@@ -211,7 +223,8 @@
             entree: document.getElementById('entree').value,
             sortie: document.getElementById('sortie').value,
             stockFinal: document.getElementById('stock-final').value,
-            observation: document.getElementById('observation').value
+            observation: document.getElementById('observation').value,
+			coupre: document.getElementById('coupre').value
         };
 
         fetch(currentSheetUrl, {
@@ -329,20 +342,25 @@ function resetFilters() {
         const rows = document.querySelectorAll('#data-table tbody tr');
         let sumColumn3 = 0;
         let sumColumn4 = 0;
+		let sumColumn5 = 0;
 
         rows.forEach(row => {
             if (row.style.display !== 'none') { // تأكد من حساب الصفوف غير المخفية فقط
                 const column3Value = parseFloat(row.cells[4].textContent) || 0;
                 const column4Value = parseFloat(row.cells[3].textContent) || 0;
+				const column5Value = parseFloat(row.cells[5].textContent) || 0;
                 sumColumn3 += column3Value;
                 sumColumn4 += column4Value;
+				sumColumn5 += column5Value;
                 
             }
         });
         const ECART =(sumColumn4-sumColumn3)*100/sumColumn4;
+		const ECART1 =(sumColumn4-sumColumn3)*100/sumColumn4;
         document.getElementById('sumColumn3').textContent = sumColumn3.toFixed(2);
         document.getElementById('sumColumn4').textContent = sumColumn4.toFixed(2);
-		document.getElementById('ECART').textContent = ECART.toFixed(1) + '%';
+		document.getElementById('ECART').textContent = ECART.toFixed(0) + '%';
+		document.getElementById('sumColumn5').textContent = sumColumn5.toFixed(0)+ 'M²';
     }
 
     document.getElementById('show-form-btn').addEventListener('click', () => {
