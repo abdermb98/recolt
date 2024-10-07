@@ -169,7 +169,7 @@
 
     <h2 style="text-align: center; font-weight: bold;" id="table-title">Selected Sheet: Sheet 1</h2>
 
-    <div style="text-align: center;" id="sum-container">TOTAL FINI: <span id="sumColumn3"></span>///// TOTAL BRUT: <span id="sumColumn4"></span></div>
+    <div style="text-align: center;" id="sum-container">TOTAL FINI: <span id="sumColumn3"></span>///// TOTAL BRUT: <span id="sumColumn4"></span></span>///// ECART: <span id="ECART"></span></div>
 
     <table id="data-table">
         <thead>
@@ -277,35 +277,52 @@
         return isNaN(date.getTime()) ? value : `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
     }
 
-    function filterTable(columnIndex, searchTerm) {
+// متغير لحفظ الفلاتر النشطة
+let activeFilters = {};
+
+// Function to filter the table based on a single column and search term
+function filterTable(columnIndex, searchTerm) {
+    // تحديث الفلاتر النشطة بإضافة الفلتر الجديد
+    if (searchTerm) {
+        activeFilters[columnIndex] = searchTerm.toLowerCase();
+    } else {
+        // إذا كان مصطلح البحث فارغًا، يتم إزالة الفلتر لهذا العمود
+        delete activeFilters[columnIndex];
+    }
+
     const rows = document.querySelectorAll('#data-table tbody tr');
-    searchTerm = searchTerm.toLowerCase();
-    
+
     rows.forEach(row => {
-        const cell = row.cells[columnIndex].textContent.toLowerCase();
-        const match = cell.includes(searchTerm);
-        row.style.display = match ? '' : 'none';
-        
-        if (match) {
-            row.removeAttribute('data-hidden');
-        } else {
-            row.setAttribute('data-hidden', true);
+        let shouldShow = true;
+
+        // فحص جميع الفلاتر النشطة لكل صف
+        for (const [colIndex, term] of Object.entries(activeFilters)) {
+            const cellText = row.cells[colIndex].textContent.toLowerCase();
+            const match = cellText.includes(term);
+            
+            // إذا فشل أي فلتر، يتم إخفاء الصف
+            if (!match) {
+                shouldShow = false;
+                break;
+            }
         }
+
+        // عرض أو إخفاء الصف بناءً على نتائج الفلاتر
+        row.style.display = shouldShow ? '' : 'none';
     });
-
-    updateColumnSums(); // تحديث مجموع الأعمدة بعد الفلترة
+	updateColumnSums();
 }
 
-// Function to reset the filter and apply a new one
-function resetAndFilter(columnIndex, searchTerm) {
+// Function to reset all filters
+function resetFilters() {
+    activeFilters = {}; // إعادة تعيين الفلاتر النشطة
     const rows = document.querySelectorAll('#data-table tbody tr');
-    
-    // Reset all rows
-    rows.forEach(row => row.removeAttribute('data-hidden'));
-    
-    // Apply the new filter
-    filterTable(columnIndex, searchTerm);
+    rows.forEach(row => row.style.display = ''); // عرض جميع الصفوف
+	updateColumnSums();
 }
+
+
+
 
 
     function updateColumnSums() {
@@ -322,9 +339,10 @@ function resetAndFilter(columnIndex, searchTerm) {
                 
             }
         });
-        
+        const ECART =(sumColumn4-sumColumn3)*100/sumColumn4;
         document.getElementById('sumColumn3').textContent = sumColumn3.toFixed(2);
         document.getElementById('sumColumn4').textContent = sumColumn4.toFixed(2);
+		document.getElementById('ECART').textContent = ECART.toFixed(1) + '%';
     }
 
     document.getElementById('show-form-btn').addEventListener('click', () => {
