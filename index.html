@@ -252,10 +252,14 @@ function getWeekNumber(d) {
         })
         .then(response => response.json())
         .then(data => {
+		    clear1();
             alert('OK!');
             loadTableData();
+			
             document.getElementById('data-entry-form').style.display = 'none'; // إخفاء النموذج بعد الإرسال
+			
         })
+		
         .catch(error => {
             alert('Error: ' + error);
         });
@@ -307,6 +311,17 @@ function getWeekNumber(d) {
     function formatDate(value) {
         const date = new Date(value);
         return isNaN(date.getTime()) ? value : `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
+    }
+	function clear1() {
+	
+    document.getElementById('stock-initial').value='';
+    document.getElementById('entree').value='';
+    document.getElementById('sortie').value='';
+    document.getElementById('stock-final').value='';
+    document.getElementById('observation').value='';
+	coupre: document.getElementById('coupre').value='';
+	
+        
     }
 
 // متغير لحفظ الفلاتر النشطة
