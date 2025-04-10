@@ -87,7 +87,7 @@
             margin-right: 10px;
         }
         #form-container {
-            display: flex;
+            
             justify-content: space-between;
         }
         #sum-container {
@@ -196,6 +196,65 @@
 </div>
 
 <script>
+
+document.getElementById("data-entry-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const date = document.getElementById("date").value;
+    const parcelle = document.getElementById("stock-initial").value;
+    const type = document.getElementById("entree").value;
+    const brut = parseFloat(document.getElementById("sortie").value);
+    const fini = parseFloat(document.getElementById("stock-final").value);
+    const superficie = parseFloat(document.getElementById("observation").value);
+
+    const rBrut = (brut / superficie).toFixed(3);
+    const rFini = (fini / superficie).toFixed(3);
+    const ecart = (((1 - (fini / brut)) * 100).toFixed(0)) + "%";
+
+    const message1 =
+        `📅 *Date* : ${date}\n` +
+        `🌱 *Parcelle* : ${parcelle}\n` +
+        `📦 *Type* : ${type}\n` +
+        `🌾 *Superficie* : ${superficie} m²\n` +
+        `⚖️ *Brut* : ${brut} kg\n` +
+        `📊 *R. Brut* : ${rBrut} kg/m²\n`;
+
+    const message2 =
+        message1 + 
+        `✅ *Fini* : ${fini} kg\n` +
+        `📊 *R. Fini* : ${rFini} kg/m²\n` +
+        `📉 *Écart* : ${ecart}`;
+
+    const token = "7914915084:AAFy5X26pPqYwDJU84jgBWWRt_7PqgPBvQg";
+    const chatId = "-1002408201424";
+
+    const finalMessage = (type === "BRUT") ? message1 : message2;
+
+    fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            chat_id: chatId,
+            text: finalMessage,
+            parse_mode: "Markdown"
+        })
+    })
+    .then(response => {
+        if (response.ok) {
+            alert("✅");
+        } else {
+            alert("❌ ");
+        }
+    })
+    .catch(error => {
+        console.error("Telegram Error:", error);
+        alert("⚠️");
+    });
+});
+
+
 document.getElementById('date').addEventListener('change', function() {
     const date = new Date(this.value);
     const weekNumber = getWeekNumber(date);
@@ -406,7 +465,7 @@ function resetFilters() {
     });
 
     document.addEventListener('DOMContentLoaded', function() {
-        // تعيين ورقة العمل الافتراضية عند تحميل الصفحة
+       
         document.getElementById('sheet-select').dispatchEvent(new Event('change'));
     });
 </script>
