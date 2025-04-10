@@ -243,7 +243,7 @@ document.getElementById("data-entry-form").addEventListener("submit", function(e
     })
     .then(response => {
         if (response.ok) {
-            alert("✅");
+            
         } else {
             alert("❌ ");
         }
@@ -465,7 +465,7 @@ function resetFilters() {
     });
 
     document.addEventListener('DOMContentLoaded', function() {
-       
+        // تعيين ورقة العمل الافتراضية عند تحميل الصفحة
         document.getElementById('sheet-select').dispatchEvent(new Event('change'));
     });
 </script>
