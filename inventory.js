@@ -6,6 +6,7 @@ let tableHeaders = [];
 let tableData = [];
 let inventoryRows = [];
 
+
 // DOM References
 const formContainer = document.getElementById('form-container');
 const dataTableContainer = document.getElementById('data-table-container');
