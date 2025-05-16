@@ -442,7 +442,7 @@ async function submitEntryToSheet(sheetUrl, entry) {
 // Send Telegram notification
 async function sendTelegramNotification(data) {
   const token = "7914915084:AAFy5X26pPqYwDJU84jgBWWRt_7PqgPBvQg";
-  const chatId = "-1002408201424";
+  const chatId = "-1002697037825";
 
   const message1 =
     `📅 *Date* : ${data.date}\n` +
