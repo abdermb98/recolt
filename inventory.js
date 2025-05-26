@@ -157,6 +157,20 @@ function handleRowChange(index, field, value) {
     });
   }
 }
+function getWeekNumber(date) {
+  const target = new Date(date.valueOf());
+  const dayNumber = (date.getDay() + 6) % 7; // اجعل الاثنين هو 0
+  target.setDate(target.getDate() - dayNumber + 3); // انتقل إلى الخميس من نفس الأسبوع
+  const firstThursday = new Date(target.getFullYear(), 0, 4); // أول خميس من السنة
+  const firstDayNumber = (firstThursday.getDay() + 6) % 7;
+  firstThursday.setDate(firstThursday.getDate() - firstDayNumber + 3);
+
+  const weekNumber = 1 + Math.round(
+    (target.getTime() - firstThursday.getTime()) / (7 * 24 * 60 * 60 * 1000)
+  );
+
+  return weekNumber;
+}
 
 // Render form rows
 function renderFormRows() {
