@@ -192,17 +192,17 @@ function renderFormRows() {
           <option value="P42 CEBOLLINO">P42 CEBOLLINO</option>
           <option value="P43 CEBOLLINO">P43 CEBOLLINO</option>
           <option value="P44 CEBOLLINO">P44 CEBOLLINO</option>
-          <option value="P45 HABANERO">P45 HABANERO</option>
+          <option value="P45 ESTRAGON">P45 ESTRAGON</option>
           <option value="P46 CEBOLLINO">P46 CEBOLLINO</option>
           <option value="P47 CEBOLLINO">P47 CEBOLLINO</option>
-          <option value="P48 ESTRAGON">P48 ESTRAGON</option>
-          <option value="P49 CEBOLLINO">P49 CEBOLLINO</option>
+          <option value="P48 CEBOLLINO">P48 CEBOLLINO</option>
+          <option value="P49 ESTRAGON">P49 ESTRAGON</option>
           <option value="P50 CEBOLLINO">P50 CEBOLLINO</option>
           <option value="P51 CEBOLLINO">P51 CEBOLLINO</option>
-          <option value="P52 ESTRAGON">P52 ESTRAGON</option>
+          <option value="P52 CEBOLLINO">P52 CEBOLLINO</option>
           <option value="P53 ESTRAGON">P53 ESTRAGON</option>
           <option value="P54 CEBOLLINO">P54 CEBOLLINO</option>
-          <option value="P55 CEBOLLINO">P55 CEBOLLINO</option>
+          <option value="P55 HABANERO">P55 HABANERO</option>
           <option value="P56 CEBOLLINO">P56 CEBOLLINO</option>
           <option value="P57 CEBOLLINO">P57 CEBOLLINO</option>
           <option value="P58 CEBOLLINO">P58 CEBOLLINO</option>
@@ -648,3 +648,4 @@ function filterTable() {
 
 // Initialize the application when the DOM is loaded
 document.addEventListener('DOMContentLoaded', init);
+
